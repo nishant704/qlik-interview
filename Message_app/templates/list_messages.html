@@ -1,0 +1,23 @@
+<div>
+  <h1>List of all Messages</h1>
+  <br>
+
+  <ul>
+    <h4> Message        | ID        </h4>
+    {% for note in messages %}
+     <li>
+       <span>
+          {{note.body}} | {{note.id}} |
+       </span>
+       <button type="button" value="Delete" onclick=del({{note.id}})> DELETE </button>
+     </li>
+     {% endfor %}
+  </ul>
+</div>
+<script type="text/javascript">
+   function del(note){
+      var xhttp = new XMLHttpRequest();
+      xhttp.open("DELETE", "http://localhost:5000/messages/" + note, true);
+      xhttp.send();
+   }
+</script>
