@@ -7,7 +7,6 @@ RUN apk add --update \
 COPY Message_app/  /Message_app
 WORKDIR /Message_app
 RUN pip install -r requirements.txt
-CMD ["init-db.py"]
 EXPOSE 5000
-ENTRYPOINT [ "python" ]
-CMD ["main.py"]
+COPY start.sh start.sh 
+CMD ["./start.sh"]
