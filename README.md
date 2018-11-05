@@ -3,13 +3,13 @@
 This is a simple RESTful python Flask application with the following feature set:
 1. Create messages.
 2. Delete messages on request.
-3. Get a specific message and checks if it is Palindrome. 
+3. Get a specific message and checks if it is Palindrome.
 4. List all the Messages posted till now.
 
-The project dockerizes the flask application and deployes it over a EC2 instance exposed over public subnet on AWS. 
+The project dockerizes the flask application and deployes it over a EC2 instance exposed over public subnet on AWS.
 Terraform is being used as the preferred provisioning tool while Ansible is used for application deployment.
 
-## Requirements 
+## Requirements
 This project needs the following packages installed on your machine (control host) preferably linux.
 1. Terraform Version : Terraform v0.11.9
 2. Ansible Version : Ansible 2.4.0.0
@@ -32,20 +32,67 @@ aws_access_key_id = XXXXXXXXXXXXXXX
 aws_secret_access_key = XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 ```
-2. Clone the Github Repo 
+2. Clone the Github Repo
 
 ```bash
 git clone https://github.com/nishant704/qlik-interview.git
 ```
 
-3. Use Terraform to spin your infrastructure, this step creates a full fledged production VPC and subnets skeleton to deploy the ec2 application
+3. Use Terraform to spin your infrastructure, this step creates a full fledged production VPC and subnets skeleton to deploy the flask application
 
+```bash
+~/qlik-interview$ cd terraform/
+
+#Move inside global
+
+~/qlik-interview/terraform$ cd global/
+
+~/qlik-interview/terraform/global$ ls
+A-S3-Terraform  B-Dynamo-DB-State_LOCK  C-VPC  D-EC2-Initial
+
+# Move inside each Directory alphabetically to spin up your infra on AWS and run "terraform apply"
+
+~/qlik-interview/terraform/global/A-S3-Terraform$ terraform  apply
+$ cd..
+~/qlik-interview/terraform/global/B-Dynamo-DB-State_LOCK$ terraform apply
+$ cd..
+~/qlik-interview/terraform/global/C-VPC$ terraform apply
+$ cd..
+~/qlik-interview/terraform/global/D-EC2-Initial$ terraform apply
+
+Copy the instance Public IP from the Outputs above 'app-instance-eip ='
+```
+This Completes your infrastructure provisioning setup.
+
+4. Use Ansible to deploy the flask application   
+
+```bash
+~/qlik-interview/ansible-playbooks$ ls
+base.yml  deploy-app.yml  hosts  roles
+
+###############################################################################
+~/qlik-interview/ansible-playbooks$ vi hosts
+[flask-app]
+<PASTE THE COPIED IP HERE>
+
+[all:vars]
+ansible_user=ubuntu
+ansible_ssh_private_key_file=~/qlik
+##############################################################################
+Run The base role First to prep the system
+
+~/qlik-interview/ansible-playbooks$ ansible-playbook -vi hosts base.yml
+
+Finally Run the deploy-app.yml playbook to deploy the application
+
+~/qlik-interview/ansible-playbooks$ ansible-playbook -vi hosts deploy-app.yml
+
+```
+The appication is now deployed and can be accessed by hitting the Public IP
 ```
 
 ## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-Please make sure to update tests as appropriate.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
