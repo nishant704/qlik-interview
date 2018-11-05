@@ -89,10 +89,8 @@ Finally Run the deploy-app.yml playbook to deploy the application
 
 ```
 The appication is now deployed and can be accessed by hitting the Public IP
-```
-
-## Contributing
 
 
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
+## Bug Reporting And Security
+
+Please raise all bugs to me, The application is currently a very minimal version and has not been tested for Production traffic and scalability !
