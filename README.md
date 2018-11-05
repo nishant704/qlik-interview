@@ -90,7 +90,7 @@ Finally Run the deploy-app.yml playbook to deploy the application
 ```
 The appication is now deployed and can be accessed by hitting the Public IP on port 80
 
-ex: http://54.143.123.4
+ex: http://3.0.45.172
 
 
 ## Bug Reporting And Security

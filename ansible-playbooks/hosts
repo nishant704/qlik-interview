@@ -1,5 +1,5 @@
 [flask-app]
-52.76.149.152
+3.0.45.172
 
 [all:vars]
 ansible_user=ubuntu
