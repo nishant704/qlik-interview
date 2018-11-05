@@ -1,0 +1,29 @@
+---
+  - name: Upload Application and Dockerfile to the Remote host
+    synchronize:
+      src: ../../../../flask-app
+      dest: /home/ubuntu/
+
+  - name: Change Ownership
+    file:
+      path: /home/ubuntu/flask-app
+      owner: ubuntu
+      group: ubuntu
+
+  - name: Install docker-py
+    pip:
+      name: docker-py
+
+  - name: Build the flask-app final image on Remote host
+    docker_image:
+      name: flask-app-img
+      tag: latest
+      path: /home/ubuntu/flask-app
+      state: present
+
+  - name: Run The docker image now
+    docker:
+      name: flask-app
+      image: "flask-app-img:latest"
+      state: started
+      ports: 0.0.0.0:80:5000
