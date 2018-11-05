@@ -1,5 +1,3 @@
-##https://medium.com/python-flask-django-tutorials-and-tips/how-to-build-a-crud-application-using-flask-python-framework-3a398b04c3c6
-
 from flask import Flask, render_template, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 import os
